@@ -1,30 +1,37 @@
 tool
 extends EditorPlugin
-export var map_sizeX = 50
-export var map_sizeY = 30
-export var tile_size = 16
-export var max_platform_size = 4
-export var min_platform_size = 2
-export var deltaY = 3
-export var density = 2
+var map_sizeX = 50
+var map_sizeY = 30
+var tile_size = 16
+var max_platform_size = 4
+var min_platform_size = 2
+var deltaY = 3
+var density = 2
 var floor_tile_id = 28
 var map = []
 var sum_cell = 0
 var dock
 var _tilemap
-var _root 
+var _root
+var width_label; var height_label;var tilesize_label;var deltaY_label;var density_label;var gap_label
+var platformMaxWidth_label; var platformMinWidth_label
 func _enter_tree():
-	
 	dock = preload("res://addons/mapgenerator/generator_dock.tscn").instance()
 	add_control_to_dock( DOCK_SLOT_RIGHT_BL, dock)
 	dock.get_node("gen").connect("pressed",self,"generate_map")
 	dock.get_node("clear").connect("pressed",self,"clear_map")
+	dock.get_node("width/TextEdit").set_text(str(map_sizeX))
+	dock.get_node("height/TextEdit1").set_text(str(map_sizeY))
+	dock.get_node("tilesize/TextEdit1").set_text(str(tile_size))
+	dock.get_node("deltaY/TextEdit1").set_text(str(deltaY))
+	dock.get_node("density/TextEdit1").set_text(str(density))
+	dock.get_node("platformmaxwidth/TextEdit1").set_text(str(max_platform_size))
+	dock.get_node("platformminwidth/TextEdit1").set_text(str(min_platform_size))
 	
 func _exit_tree():
-
+	remove_control_from_docks( dock ) # Remove the dock
 	dock.get_node("gen").disconnect("pressed",self,"generate_map")
 	dock.get_node("clear").disconnect("pressed",self,"clear_map")
-	remove_control_from_docks( dock ) # Remove the dock
 	dock.free() # Erase the control from the memory
 	
 func generate_fullmap():
