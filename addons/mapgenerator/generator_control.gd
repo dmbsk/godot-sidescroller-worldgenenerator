@@ -2,7 +2,11 @@ tool
 extends Control
 
 func _enter_tree():
-    get_node("Button").connect("pressed", self, "clicked")
+	get_node("gen").connect("pressed", self, "gen")
+	get_node("clear").connect("pressed", self, "clear")
 
-func clicked():
-    print("You clicked me!")
+func gen():
+	print("You clicked gen!")
+
+func clear():
+	print("clear!")

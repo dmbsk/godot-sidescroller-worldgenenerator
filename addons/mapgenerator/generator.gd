@@ -1,15 +1,13 @@
-tool
-extends EditorPlugin
-export var map_sizeX = 50
+export var map_sizeX = 200
 export var map_sizeY = 30
-export var tile_size = 10
+export var tile_size = 16
 export var max_platform_size = 4
 export var min_platform_size = 2
 export var deltaY = 3
-export var density = 2
+export var density = 4
 var map = []
 var sum_cell = 0
-func _enter_tree():
+func generate_fullmap():
 	for i in range(0, map_sizeX):
 		map.append([])
 		for j in range (0, map_sizeY):
@@ -17,10 +15,9 @@ func _enter_tree():
 			sum_cell += 1
 			
 	pass
-func _exit_tree():
-	pass
 
-func path():
+func generate_floor():
+	generate_fullmap()
 	for i in range(0, density):
 		var cell_sum = 0
 		var x = 0
@@ -47,30 +44,24 @@ func path():
 	pass
 
 func _draw():
-	path()
-	var color
-	var gap = 0
-	var pos_y = 0
-	var pos_x = 0
-	for x in range(0, map_sizeX):
-		for y in range(0, map_sizeY):
-			if map[x][y] == 1: 
-				color = Color(0, 1, 0)
-				var new_node = Node.new()
-				new_node.set("Type", Sprite)
-				var tex = load("res://icon.png")
-				print(tex)
-				
-				new_node.set_name("tile" , x , "x" , y)
-				get_scene().add_child(new_node)
-				new_node.set_owner(get_scene())
-			elif x == map_sizeX-1 || y == map_sizeY-1 || x == 0 || y == 0:
-				color = Color(1, 0, 0)
-			else:
-				color = Color(0, 0, 0, 0)
-			pos_x = ( x * tile_size ) + x*gap
-			pos_y = ( y * tile_size ) + y*gap
-			var rect2 = Rect2( pos_x, pos_y, tile_size, tile_size)
-			draw_rect( rect2, color)
+	if map.size() > 0:
+		var color
+		var gap = 0
+		var pos_y = 0
+		var pos_x = 0
+		for x in range(0, map_sizeX):
+			for y in range(0, map_sizeY):
+				if map[x][y] == 1: 
+					color = Color(0, 1, 0)
+				elif x == map_sizeX-1 || y == map_sizeY-1 || x == 0 || y == 0:
+					color = Color(1, 0, 0)
+				else:
+					color = Color(0, 0, 0, 0)
+				pos_x = ( x * tile_size ) + x*gap
+				pos_y = ( y * tile_size ) + y*gap
+				var rect2 = Rect2( pos_x, pos_y, tile_size, tile_size)
+				draw_rect( rect2, color)
 			
-	
+func gen_full():
+	generate_fullmap()
+	_draw()

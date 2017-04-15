@@ -33,9 +33,9 @@ func _fixed_process(delta):
 	# Create forces
 	var force = Vector2(0, GRAVITY)
 	
-	var walk_left = Input.is_action_pressed("move_left")
-	var walk_right = Input.is_action_pressed("move_right")
-	var jump = Input.is_action_pressed("jump")
+	var walk_left = Input.is_action_pressed("ui_left")
+	var walk_right = Input.is_action_pressed("ui_right")
+	var jump = Input.is_action_pressed("ui_up")
 	
 	var stop = true
 	
