@@ -45,10 +45,14 @@ func generate_fullmap():
 func generate_map():
 	#get root
 	_root = get_tree().get_edited_scene_root()
-	
-	#create tilemap 28
 	_tilemap = _root.get_node("World")
-	# set_cell( int x, int y, int tile, bool flip_x=false, bool flip_y=false, bool transpose=false )
+	map_sizeX = int(dock.get_node("width/TextEdit").get_text())
+	map_sizeY = int(dock.get_node("height/TextEdit1").get_text())
+	tile_size = int(dock.get_node("tilesize/TextEdit1").get_text())
+	deltaY = int(dock.get_node("deltaY/TextEdit1").get_text())
+	density = int(dock.get_node("density/TextEdit1").get_text())
+	max_platform_size = int(dock.get_node("platformmaxwidth/TextEdit1").get_text())
+	min_platform_size = int(dock.get_node("platformminwidth/TextEdit1").get_text())
 	generate_fullmap()
 	for i in range(0, density):
 		var cell_sum = 0
@@ -56,7 +60,7 @@ func generate_map():
 		randomize()
 		var platform_size = randi()%max_platform_size+min_platform_size
 		var rangeY = randi()%(deltaY + 1)
-		var y = map_sizeY - rangeY -1
+		var y = abs(map_sizeY - rangeY -1)
 		#print(str(x) + "," + str(y) + " = " + str(platform_size))
 		while x < map_sizeX:
 			randomize()
@@ -71,7 +75,7 @@ func generate_map():
 				x += gap_size
 				cell_sum = 0
 				rangeY = randi()%(deltaY + 1)
-				y = map_sizeY - rangeY - 1
+				y = abs(map_sizeY - rangeY - 1)
 				
 			x += 1
 	#draw_map()

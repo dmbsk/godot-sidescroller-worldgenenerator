@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://move.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://world.tscn" type="PackedScene" id=3]
+[ext_resource path="res://generator.gd" type="Script" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -38,5 +39,9 @@ shape_range = Vector2( 0, 0 )
 trigger = false
 
 [node name="Node" parent="." instance=ExtResource( 3 )]
+
+[node name="Sprite" type="Sprite" parent="."]
+
+script/script = ExtResource( 4 )
 
 
