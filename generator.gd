@@ -1,8 +1,8 @@
-var map_test_sizeX = 260 #260
-var map_test_sizeY = 120 
+var map_test_sizeX = 210 #260
+var map_test_sizeY = 100 
 var tile_size = 5
-var max_platform_size = 4
-var min_platform_size = 2
+var max_platform_size = 5
+var min_platform_size = 3
 var platform_height = 5
 var min_y_gap = 2
 var deltaY = 80
@@ -43,12 +43,20 @@ func generate_floor():
 				
 			x += 1
 	pass
-	
+func fixGaps():
+	for x in range(0, map_test_sizeX):
+		for y in range(0, map_test_sizeY):
+			if map_test[x][y] == 8 && map_test[x][y + min_y_gap] == 8:
+				var end = (y + min_y_gap) - y + 1
+				for j in range( 0, end):
+					map_test[x][y+j] = 8
 func mapFixer():
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
 			if map_test[x][y] == 8:
 				#center
+
+						#print(x, " x " , y+j , "    and start = ", j)
 				if map_test[x-1][y] != 0 && map_test[x+1][y] == 8 && map_test[x][y+1] != 0 && map_test[x][y-1] != 0:
 					map_test[x][y] = 5
 						
@@ -96,23 +104,16 @@ func mapFixer():
 								friends += 1
 					if friends == 0:
 						map_test[x][y] == 44
-							
-	for x in range(0, map_test_sizeX):
-		for y in range(0, map_test_sizeY):
-			if map_test[x][y] == 2 && map_test[x][y + min_y_gap] == 8:
-				var start = (y + min_y_gap) - y
-				var end = start + min_y_gap + 1
-				for j in range( start, end):
-					map_test[x][y+j] == 55
-					print(x, " x " , y)
-					
+				
+
 	
 func _draw():
 	generate_floor()
+	fixGaps()
 	mapFixer()
 	if map_test.size() > 0:
 		var color
-		var gap = 0
+		var gap = 1
 		var pos_y = 0
 		var pos_x = 0
 		#7 8 9			YE GN GN BL
@@ -148,5 +149,10 @@ func colorReturner(c):
 		0: Color(0, 0, 0, 0),
 		
 		#wip
-		55: Color(0, 0, 0, 0.85), ## black fixed gap y
+		55: Color(0, 0, 0, 0.5), ## black fixed gap y
 	}[c]
+
+func blockType(t):
+	return{
+		#center
+	}[t]
