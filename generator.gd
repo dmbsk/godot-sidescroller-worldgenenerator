@@ -1,10 +1,11 @@
-var map_test_sizeX = 700
-var map_test_sizeY = 440
-var tile_size = 3
+var map_test_sizeX = 260
+var map_test_sizeY = 120
+var tile_size = 5
 var max_platform_size = 4
 var min_platform_size = 2
-var deltaY = 440
-var density = 1100
+var platform_height = 5
+var deltaY = 80
+var density = 10
 var map_test = []
 var sum_cell = 0
 func _ready():
@@ -27,8 +28,9 @@ func generate_floor():
 		var y = map_test_sizeY - rangeY - 2
 		while x < map_test_sizeX - 1:
 			randomize()
-			if cell_sum < platform_size:
-				map_test[x][y] = 8
+			if cell_sum < platform_size*platform_height:
+				for j in range(0, platform_height):
+					map_test[x][y-j] = 8
 				cell_sum += 1
 			else:
 				platform_size = randi()%max_platform_size + min_platform_size
@@ -40,7 +42,9 @@ func generate_floor():
 				
 			x += 1
 	pass
-
+func mapFixer():
+	print("mapfixer")
+	
 func _draw():
 	generate_floor()
 	if map_test.size() > 0:
@@ -98,11 +102,9 @@ func _draw():
 						var friends = 0
 						for i in range(x, x+2):
 							for j in range (y-1, y+2):
-								print(i , " ", j)
 								if map_test[i][j] != 0 && i*j != x*y:
 									friends += 1
 						if friends == 0:
-							print(x, " ", y , "      f ", friends, " value:" , map_test[x][y])
 							color = Color(1, 1, 1)
 							map_test[x][y] == 66
 							 
