@@ -1,12 +1,12 @@
-var map_test_sizeX = 210 #260
-var map_test_sizeY = 100 
+var map_test_sizeX = 260 #260
+var map_test_sizeY = 120 
 var tile_size = 5
-var max_platform_size = 5
-var min_platform_size = 3
-var platform_height = 5
+var max_platform_size = 25
+var min_platform_size = 2
+var platform_height = 4
 var min_y_gap = 2
-var deltaY = 80
-var density = 10
+var deltaY = 110
+var density = 20
 var map_test = []
 var sum_cell = 0
 func _ready():
@@ -29,7 +29,7 @@ func generate_floor():
 		var y = map_test_sizeY - rangeY - 2
 		while x < map_test_sizeX - 1:
 			randomize()
-			if cell_sum < platform_size*platform_height:
+			if cell_sum < platform_size:
 				for j in range(0, platform_height):
 					map_test[x][y-j] = 8
 				cell_sum += 1
@@ -46,7 +46,7 @@ func generate_floor():
 func fixGaps():
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
-			if map_test[x][y] == 8 && map_test[x][y + min_y_gap] == 8:
+			if y + min_y_gap <= map_test_sizeY && (map_test[x][y] == 8 && map_test[x][y + min_y_gap] == 8):
 				var end = (y + min_y_gap) - y + 1
 				for j in range( 0, end):
 					map_test[x][y+j] = 8
@@ -56,7 +56,7 @@ func mapFixer():
 			if map_test[x][y] == 8:
 				#center
 
-						#print(x, " x " , y+j , "    and start = ", j)
+						#prvar(x, " x " , y+j , "    and start = ", j)
 				if map_test[x-1][y] != 0 && map_test[x+1][y] == 8 && map_test[x][y+1] != 0 && map_test[x][y-1] != 0:
 					map_test[x][y] = 5
 						
@@ -74,6 +74,8 @@ func mapFixer():
 						map_test[x][y] = 7
 					if map_test[x][y-1] != 0 && map_test[x-1][y] == 0:
 						map_test[x][y] = 4
+						if map_test[x+1][y] == 0 && map_test[x][y+1] != 0:
+							map_test[x][y] = 46
 					if map_test[x][y-1] != 0 && map_test[x][y+1] == 0 && map_test[x+1][y] != 0:
 						map_test[x][y] = 1
 
@@ -85,7 +87,7 @@ func mapFixer():
 						map_test[x][y] = 6
 					if map_test[x][y-1] != 0 && map_test[x][y+1] == 0 && map_test[x+1][y] == 0:
 						map_test[x][y] = 3
-							
+						
 				if map_test[x][y] == 9:
 					var friends = 0
 					for i in range(x, x+2):
@@ -97,7 +99,6 @@ func mapFixer():
 							 
 				elif map_test[x][y] == 7:
 					var friends = 0
-					var done = false
 					for i in range(x-1, x+1):
 						for j in range (y-1, y+2):
 							if map_test[i][j] != 0 && i*j != x*y:
@@ -126,7 +127,6 @@ func _draw():
 				var rect2 = Rect2( pos_x, pos_y, tile_size, tile_size)
 				color = colorReturner(map_test[x][y])
 				draw_rect( rect2, color)
-				
 func colorReturner(c):
 	return{
 		7: Color(1, 0.4, 0), ## orange / left corner
@@ -145,6 +145,10 @@ func colorReturner(c):
 		44: Color(1, 0.05, 0), ## left 
 		66: Color(1, 1, 1), ## right
 		
+		#platform width = 1
+		46: Color(0.35, 0.35, 0.35), # gray left and right
+		426: Color(0.2, 0.2, 0.2), # gray left bottom right
+		486: Color(0.2, 0.8, 0.1), # green left top rightt
 		#air?
 		0: Color(0, 0, 0, 0),
 		
