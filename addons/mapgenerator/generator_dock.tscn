@@ -9,11 +9,14 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1.0
-margin/top = 0.0
-margin/right = 221.0
-margin/bottom = 724.0
+margin/left = 0.0
+margin/top = 1.0
+margin/right = 445.0
+margin/bottom = 725.0
 script/script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="gen" type="Button" parent="."]
 
@@ -21,10 +24,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 1.0
-margin/top = 545.0
-margin/right = 203.0
-margin/bottom = 569.0
+margin/left = 149.0
+margin/top = 392.0
+margin/right = 238.0
+margin/bottom = 416.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -37,10 +40,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 2.0
-margin/top = 576.0
-margin/right = 202.0
-margin/bottom = 596.0
+margin/left = 7.0
+margin/top = 398.0
+margin/right = 83.0
+margin/bottom = 418.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -310,7 +313,6 @@ margin/bottom = 231.0
 
 [node name="min" type="Control" parent="platform"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -644,19 +646,183 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="tilesPicker" type="Control" parent="."]
+[node name="tilepicker" type="Control" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = -1.0
-margin/top = 96.0
-margin/right = 39.0
-margin/bottom = 136.0
+margin/left = 34.0
+margin/top = 171.0
+margin/right = 74.0
+margin/bottom = 211.0
 
-[node name="7" type="TextureFrame" parent="tilesPicker"]
+[node name="7" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -27.0
+margin/top = 125.0
+margin/right = 16.0
+margin/bottom = 152.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="8" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 16.0
+margin/top = 125.0
+margin/right = 59.0
+margin/bottom = 153.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="9" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 59.0
+margin/top = 125.0
+margin/right = 102.0
+margin/bottom = 152.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="4" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -26.0
+margin/top = 151.0
+margin/right = 17.0
+margin/bottom = 178.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="5" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 16.0
+margin/top = 152.0
+margin/right = 59.0
+margin/bottom = 180.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="6" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 59.0
+margin/top = 151.0
+margin/right = 102.0
+margin/bottom = 177.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="1" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -26.0
+margin/top = 178.0
+margin/right = 17.0
+margin/bottom = 206.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="2" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 17.0
+margin/top = 178.0
+margin/right = 60.0
+margin/bottom = 205.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="3" type="TextEdit" parent="tilepicker"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 59.0
+margin/top = 177.0
+margin/right = 102.0
+margin/bottom = 206.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret/block_caret = false
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
+
+[node name="tileshower" type="Control" parent="."]
+
+rect/scale = Vector2( 0.5, 0.5 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 142.0
+margin/top = 164.0
+margin/right = 182.0
+margin/bottom = 204.0
+
+[node name="7" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -672,7 +838,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="8" type="TextureFrame" parent="tilesPicker"]
+[node name="8" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -688,7 +854,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="9" type="TextureFrame" parent="tilesPicker"]
+[node name="9" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -704,7 +870,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="4" type="TextureFrame" parent="tilesPicker"]
+[node name="4" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -720,7 +886,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="5" type="TextureFrame" parent="tilesPicker"]
+[node name="5" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -736,7 +902,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="6" type="TextureFrame" parent="tilesPicker"]
+[node name="6" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -752,7 +918,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="1" type="TextureFrame" parent="tilesPicker"]
+[node name="1" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -768,7 +934,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="2" type="TextureFrame" parent="tilesPicker"]
+[node name="2" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -784,7 +950,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="3" type="TextureFrame" parent="tilesPicker"]
+[node name="3" type="TextureFrame" parent="tileshower"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
