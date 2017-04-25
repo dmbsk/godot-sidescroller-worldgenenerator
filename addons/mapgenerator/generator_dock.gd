@@ -2,7 +2,7 @@ tool
 extends EditorPlugin
 var map_sizeX = 260 #260
 var map_sizeY = 120 
-var tile_size = 5
+var tile_size = 1
 var max_platform_size = 25
 var min_platform_size = 2
 var platform_height = 4
@@ -18,26 +18,28 @@ var platformMaxWidth_label; var platformMinWidth_label
 func _enter_tree():
 	dock = preload("res://addons/mapgenerator/generator_dock.tscn").instance()
 	add_control_to_dock( DOCK_SLOT_RIGHT_BL, dock)
-	dock.get_node("gen").connect("pressed",self,"generate_map")
+	dock.get_node("gen").connect("pressed",self,"map_drawer")
 	dock.get_node("clear").connect("pressed",self,"clear_map")
 	dock.get_node("width/TextEdit").set_text(str(map_sizeX))
 	dock.get_node("height/TextEdit1").set_text(str(map_sizeY))
-	dock.get_node("tilesize/TextEdit1").set_text(str(tile_size))
 	dock.get_node("deltaY/TextEdit1").set_text(str(deltaY))
 	dock.get_node("density/TextEdit1").set_text(str(density))
 	dock.get_node("platform/min/platform_width/TextEdit1").set_text(str(min_platform_size))
+	dock.get_node("platform/max/platform_width/TextEdit1").set_text(str(max_platform_size))
 	dock.get_node("platform/min/platform_height/TextEdit1").set_text(str(platform_height))
 	dock.get_node("platform/min/min_y_gap/TextEdit1").set_text(str(min_y_gap))
 	for i in range(0, 10):
-		#tile.append([])
+		tile.append([])
+	for i in range(1, 10):
 		var path = "tilepicker/" + str(i)
 		tile[i] = dock.get_node(path)
+		tile[i].set_text( str(i) )
 		print(tile[i])
 		
 
 func _exit_tree():
-	#dock.get_node("gen").disconnect("pressed",self,"map_drawer")
-	#dock.get_node("clear").disconnect("pressed",self,"clear_map")
+	dock.get_node("gen").disconnect("pressed",self,"map_drawer")
+	dock.get_node("clear").disconnect("pressed",self,"clear_map")
 	remove_control_from_docks( dock ) # Remove the dock
 	dock.free() # Erase the control from the memory
 	
@@ -46,15 +48,15 @@ func getData():
 	_tilemap = _root.get_node("World")
 	map_sizeX = int(dock.get_node("width/TextEdit").get_text())
 	map_sizeY = int(dock.get_node("height/TextEdit1").get_text())
-	tile_size = int(dock.get_node("tilesize/TextEdit1").get_text())
 	deltaY = int(dock.get_node("deltaY/TextEdit1").get_text())
 	density = int(dock.get_node("density/TextEdit1").get_text())
-	max_platform_size = int(dock.get_node("platform/min/platform_width/TextEdit1").get_text())
-	min_platform_size = int(dock.get_node("platform/max/platform_width/TextEdit1").get_text())
-	platform_height = int(dock.get_node("platform/min/platform_width/TextEdit1").get_text())
+	max_platform_size = int(dock.get_node("platform/max/platform_width/TextEdit1").get_text())
+	min_platform_size = int(dock.get_node("platform/min/platform_width/TextEdit1").get_text())
+	platform_height = int(dock.get_node("platform/min/platform_height/TextEdit1").get_text())
 	min_y_gap = int(dock.get_node("platform/min/min_y_gap/TextEdit1").get_text())
 	
 func generateMap():
+	map = []
 	for i in range(0, map_sizeX + 1):
 		map.append([])
 		for j in range (0, map_sizeY + 1):
@@ -152,12 +154,12 @@ func mapFixer():
 
 	
 func map_drawer():
+	getData()
+	generateMap()
 	generate_floor()
 	fixGaps()
 	mapFixer()
 	if map.size() > 0:
-		var color
-		var gap = 0
 		var pos_y = 0
 		var pos_x = 0
 		#7 8 9			YE GN GN BL
@@ -166,9 +168,12 @@ func map_drawer():
 		#void set_cell( int x, int y, int tile, bool flip_x=false, bool flip_y=false, bool transpose=false )
 		for x in range(0, map_sizeX):
 			for y in range(0, map_sizeY):
-				pos_x = ( x * tile_size ) + x*gap
-				pos_y = ( y * tile_size ) + y*gap
-				_tilemap.set_cell( pos_x, pos_y, int(tile[map[x][y]].get_text()))
+				pos_x = ( x * tile_size )
+				pos_y = ( y * tile_size )
+				if map[x][y] != 0 && map[x][y] != 46:
+					var tile_id = int(tile[map[x][y]].get_text())
+					_tilemap.set_cell( pos_x, pos_y, tile_id)
+
 
 func clear_map():
 	_tilemap.clear()

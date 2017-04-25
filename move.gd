@@ -15,9 +15,10 @@ const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
 const WALK_MAX_SPEED = 200
-const STOP_FORCE = 1300
+const STOP_FORCE = 450
 const JUMP_SPEED = 200
-const JUMP_MAX_AIRBORNE_TIME = 0.2
+const JUMP_AMOUNT = 2
+const JUMP_MAX_AIRBORNE_TIME = 99999
 
 const SLIDE_STOP_VELOCITY = 1.0 # One pixel per second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # One pixel

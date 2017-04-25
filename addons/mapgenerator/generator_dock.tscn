@@ -437,19 +437,16 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 99.0
-margin/top = 0.0
-margin/right = 178.0
-margin/bottom = 28.0
+margin/left = 1.0
+margin/top = -1.0
+margin/right = 80.0
+margin/bottom = 27.0
 syntax_highlighting = false
 show_line_numbers = false
 highlight_all_occurrences = false
 caret/block_caret = false
 caret/caret_blink = false
 caret/caret_blink_speed = 0.65
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Label1" type="Label" parent="platform/min/platform_height"]
 
@@ -471,7 +468,6 @@ __meta__ = {
 
 [node name="max" type="Control" parent="platform"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -547,9 +543,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 2.0
+margin/left = 103.0
 margin/top = 0.0
-margin/right = 81.0
+margin/right = 182.0
 margin/bottom = 28.0
 syntax_highlighting = false
 show_line_numbers = false
@@ -557,9 +553,6 @@ highlight_all_occurrences = false
 caret/block_caret = false
 caret/caret_blink = false
 caret/caret_blink_speed = 0.65
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Label1" type="Label" parent="platform/max/platform_height"]
 

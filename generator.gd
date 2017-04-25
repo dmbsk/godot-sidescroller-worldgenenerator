@@ -108,7 +108,7 @@ func mapFixer():
 				
 
 	
-func _drawaaa():
+func _drawa():
 	generate_floor()
 	fixGaps()
 	mapFixer()
