@@ -1,12 +1,14 @@
 var map_test_sizeX = 260 #260
 var map_test_sizeY = 120 
 var tile_size = 5
-var max_platform_size = 25
+var max_platform_size = 5
 var min_platform_size = 2
-var platform_height = 4
+var min_platform_height = 3
+var max_platform_height = 5
 var min_y_gap = 2
+var flatter_distance = 2
 var deltaY = 110
-var density = 20
+var density = 30
 var map_test = []
 var sum_cell = 0
 func _ready():
@@ -25,24 +27,31 @@ func generate_floor():
 		var x = 1
 		randomize()
 		var platform_size = randi()%max_platform_size+min_platform_size
+		randomize()
 		var rangeY = randi()%(deltaY + 1)
 		var y = map_test_sizeY - rangeY - 2
 		while x < map_test_sizeX - 1:
-			randomize()
 			if cell_sum < platform_size:
+				randomize()
+				var platform_height =  int(rand_range(min_platform_height, max_platform_height + 1))
+				print(platform_height)
 				for j in range(0, platform_height):
 					map_test[x][y-j] = 8
 				cell_sum += 1
 			else:
+				randomize()
 				platform_size = randi()%max_platform_size + min_platform_size
+				randomize()
 				var gap_size = randi()%int((max_platform_size*0.5))+1
 				x += gap_size
 				cell_sum = 0
+				randomize()
 				rangeY = randi()%(deltaY + 1)
 				y = map_test_sizeY - rangeY - 2
 				
 			x += 1
 	pass
+	
 func fixGaps():
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
@@ -50,6 +59,66 @@ func fixGaps():
 				var end = (y + min_y_gap) - y + 1
 				for j in range( 0, end):
 					map_test[x][y+j] = 8
+					
+func map_flatter(flatness_strenght):
+	for j in range(0, flatness_strenght):
+		for x in range(0, map_test_sizeX):
+			for y in range(0, map_test_sizeY):
+				if map_test[x][y] == 0 && map_test[x][y+1] == 8 && map_test[x-1][y] == 8:
+					map_test[x][y] = 8;
+					
+func map_flipper(var axis):
+	if axis.length() > 0:
+		var map_copy = []
+		for i in range(0, map_test_sizeX + 1):
+			map_copy.append([])
+			for j in range (0, map_test_sizeY + 1):
+				map_copy[i].append(0)
+				map_copy[i][j] = map_test[i][j]
+		if axis == "x":
+			for x in range (map_test_sizeX, 0, -1):
+				for y in range (0, map_test_sizeY):
+					var reverse = map_test[x].size()
+					map_test[x][y] == map_copy[reverse - x][y]
+		elif axis == "y":
+			for x in range (0, map_test_sizeX + 1):
+				for y in range (map_test_sizeY, 0, -1):
+					var reverse = map_test[y].size()
+					map_test[x][y] == map_copy[x][reverse - y]
+		elif axis == "xy" || axis == "yx":
+			for x in range (map_test_sizeY, 0, -1):
+				for y in range (map_test_sizeY, 0, -1):
+					var reverse_x = map_test[x].size()
+					var reverse_y = map_test[y].size()
+					map_test[x][y] == map_copy[reverse_x - x][reverse_y - y]
+func platform_flipper(var axis):
+	if axis.length() > 0:
+		var map_copy = []
+		for i in range(0, map_test_sizeX + 1):
+			map_copy.append([])
+			for j in range (0, map_test_sizeY + 1):
+				map_copy[i].append(0)
+				map_copy[i][j] = map_test[i][j]
+		if axis == "x":
+			for x in range (map_test_sizeX, 0, -1):
+				for y in range (0, map_test_sizeY):
+					var reverse = map_test[x].size()
+					map_test[x][y] == map_copy[reverse - x][y]
+		elif axis == "y":
+			for x in range (0, map_test_sizeX + 1):
+				for y in range (0, map_test_sizeY + 1):
+					var center = 60#int(map_test[y].size() / 2)
+					if y < center && map_test[x][y] == 8:
+						map_test[x][y] == map_copy[x][center - abs(center - y)]
+						print( center - abs(center - y), " to ", y)
+					else:
+						map_test[x][y] == map_copy[x][center + abs(center - y)]
+		elif axis == "xy" || axis == "yx":
+			for x in range (map_test_sizeY, 0, -1):
+				for y in range (map_test_sizeY, 0, -1):
+					var reverse_x = map_test[x].size()
+					var reverse_y = map_test[y].size()
+					map_test[x][y] == map_copy[reverse_x - x][reverse_y - y]
 func mapFixer():
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
@@ -108,8 +177,17 @@ func mapFixer():
 				
 
 	
-func _drawa():
+func _draw():
 	generate_floor()
+	#platform_flipper("y")
+	map_flipper("y")
+	map_flatter(1)
+	map_flipper("y")
+	map_flatter(1)
+	map_flipper("y")
+	map_flatter(1)
+	map_flipper("y")
+	map_flatter(1)
 	fixGaps()
 	mapFixer()
 	if map_test.size() > 0:
