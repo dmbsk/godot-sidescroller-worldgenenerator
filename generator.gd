@@ -1,14 +1,15 @@
-var map_test_sizeX = 260 #260
-var map_test_sizeY = 120 
-var tile_size = 5
-var max_platform_size = 5
+var map_test_sizeX = 650 #260
+var map_test_sizeY = 300 
+var tile_size = 2
+var max_platform_size = 20
 var min_platform_size = 2
 var min_platform_height = 3
 var max_platform_height = 5
 var min_y_gap = 2
+var min_x_gap = 3
 var flatter_distance = 2
-var deltaY = 110
-var density = 30
+var deltaY = 300
+var density = 100
 var map_test = []
 var sum_cell = 0
 func _ready():
@@ -21,7 +22,6 @@ func _ready():
 	pass
 
 func generate_floor():
-
 	for i in range(0, density):
 		var cell_sum = 0
 		var x = 1
@@ -34,7 +34,6 @@ func generate_floor():
 			if cell_sum < platform_size:
 				randomize()
 				var platform_height =  int(rand_range(min_platform_height, max_platform_height + 1))
-				print(platform_height)
 				for j in range(0, platform_height):
 					map_test[x][y-j] = 8
 				cell_sum += 1
@@ -52,13 +51,17 @@ func generate_floor():
 			x += 1
 	pass
 	
-func fixGaps():
+func fixGaps(expand_x, expand_y):
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
-			if y + min_y_gap <= map_test_sizeY && (map_test[x][y] == 8 && map_test[x][y + min_y_gap] == 8):
-				var end = (y + min_y_gap) - y + 1
-				for j in range( 0, end):
-					map_test[x][y+j] = 8
+			
+			if y + min_y_gap <= map_test_sizeY && map_test[x][y+1] == 0 && (map_test[x][y] == 8 && map_test[x][y + min_y_gap] == 8):
+				for j in range( 0, min_y_gap + 1 ):
+					map_test[x][y + j] = 8 if expand_y else 0  
+					
+			if x + min_x_gap <= map_test_sizeY && map_test[x+1][y] == 0 && (map_test[x][y] == 8 && map_test[x + min_x_gap][y] == 8):
+				for j in range( 0, min_x_gap):
+					map_test[x + j][y] = 8 if expand_x else 0
 					
 func map_flatter(flatness_strenght):
 	for j in range(0, flatness_strenght):
@@ -91,6 +94,7 @@ func map_flipper(var axis):
 					var reverse_x = map_test[x].size()
 					var reverse_y = map_test[y].size()
 					map_test[x][y] == map_copy[reverse_x - x][reverse_y - y]
+					
 func platform_flipper(var axis):
 	if axis.length() > 0:
 		var map_copy = []
@@ -110,7 +114,6 @@ func platform_flipper(var axis):
 					var center = 60#int(map_test[y].size() / 2)
 					if y < center && map_test[x][y] == 8:
 						map_test[x][y] == map_copy[x][center - abs(center - y)]
-						print( center - abs(center - y), " to ", y)
 					else:
 						map_test[x][y] == map_copy[x][center + abs(center - y)]
 		elif axis == "xy" || axis == "yx":
@@ -119,6 +122,7 @@ func platform_flipper(var axis):
 					var reverse_x = map_test[x].size()
 					var reverse_y = map_test[y].size()
 					map_test[x][y] == map_copy[reverse_x - x][reverse_y - y]
+					
 func mapFixer():
 	for x in range(0, map_test_sizeX):
 		for y in range(0, map_test_sizeY):
@@ -180,19 +184,13 @@ func mapFixer():
 func _draw():
 	generate_floor()
 	#platform_flipper("y")
-	map_flipper("y")
-	map_flatter(1)
-	map_flipper("y")
-	map_flatter(1)
-	map_flipper("y")
-	map_flatter(1)
-	map_flipper("y")
-	map_flatter(1)
-	fixGaps()
+	#map_flipper("y")
+	map_flatter(3)
+	fixGaps(false, false)
 	mapFixer()
 	if map_test.size() > 0:
 		var color
-		var gap = 1
+		var gap = 0
 		var pos_y = 0
 		var pos_x = 0
 		#7 8 9			YE GN GN BL
@@ -228,7 +226,7 @@ func colorReturner(c):
 		426: Color(0.2, 0.2, 0.2), # gray left bottom right
 		486: Color(0.2, 0.8, 0.1), # green left top rightt
 		#air?
-		0: Color(0, 0, 0, 0),
+		0: Color(255, 255, 255, 0),
 		
 		#wip
 		55: Color(0, 0, 0, 0.5), ## black fixed gap y
